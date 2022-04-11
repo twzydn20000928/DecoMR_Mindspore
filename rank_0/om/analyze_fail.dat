@@ -1,0 +1,133 @@
+# [No.1] construct_wrapper.1
+# In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(19)/    def construct(self, x):/
+funcgraph fg_1(
+        %para1 : Tensor(F32)[1, 2, 3, 4]    # x
+    ) {
+
+#------------------------> 0
+    %1 = FuncGraph::fg_2(%para1)    #(Tensor(F32)[1, 2, 3, 4])    # fg_2=construct.2 #scope: Default
+#[CNode]8
+    Primitive::Return{prim_type=1}(%1)    #(Undefined) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(23)/        return result/#[CNode]9
+}
+# order:
+#   1: construct_wrapper.1:[CNode]8{[0]: ValueNode<FuncGraph> construct.2, [1]: x}
+#   2: construct_wrapper.1:[CNode]9{[0]: ValueNode<Primitive> Return, [1]: [CNode]8}
+
+
+# [No.2] construct.2
+# In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(19)/    def construct(self, x):/
+funcgraph fg_2(
+        %para2 : Tensor(F32)[1, 2, 3, 4]    # x
+    ) {
+    %1 : Func = ClassType() #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(20)/        resize_bilinear = nn.ResizeBilinear()/#resize_bilinear
+    %2 : Tuple[Tensor(F32)] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}(%para2)    #(Tensor(F32)[1, 2, 3, 4]) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(21)/        result = resize_bilinear(x, size=self.size, scale_factor=self.scale_factor,/#[CNode]10
+    %3 : Tuple[String*3] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}("size", "scale_factor", "align_corners")    #(String, String, String) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(21)/        result = resize_bilinear(x, size=self.size, scale_factor=self.scale_factor,/#[CNode]11
+    %4 : Tuple[Tuple[I64*2],NoneType*2] = DoSignaturePrimitive::S-Prim-MakeTuple{prim_type=1}((I64(5), I64(5)), None, None)    #(Tuple[I64*2], NoneType, NoneType) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(21)/        result = resize_bilinear(x, size=self.size, scale_factor=self.scale_factor,/#[CNode]12
+    %5 : Dictionary[[size,scale_factor,align_corners,],[Tuple[Int64*2],kMetaTypeNone*2]] = DoSignaturePrimitive::S-Prim-make_dict{prim_type=1}(%3, %4)    #(Tuple[String*3], Tuple[Tuple[I64*2],NoneType*2]) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(21)/        result = resize_bilinear(x, size=self.size, scale_factor=self.scale_factor,/#[CNode]13
+
+#------------------------> 1
+    %6 = UnpackCall::unpack_call(%1, %2, %5)    #(Func, Tuple[Tensor(F32)], Dictionary[[size,scale_factor,align_corners,],[Tuple[Int64*2],kMetaTypeNone*2]]) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(21)/        result = resize_bilinear(x, size=self.size, scale_factor=self.scale_factor,/#result
+    Primitive::Return{prim_type=1}(%6)    #(Undefined) #scope: Default
+      # In file C:\Users\xlk\PycharmProjects\DecoMR_Mindspore\models\ResizeBilinear.py(23)/        return result/#[CNode]14
+}
+# order:
+#   1: construct.2:resize_bilinear{[0]: ValueNode<ClassType> class 'mindspore.nn.layer.basic.ResizeBilinear'}
+#   2: construct.2:[CNode]10{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: x}
+#   3: construct.2:[CNode]11{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<StringImm> size, [2]: ValueNode<StringImm> scale_factor, [3]: ValueNode<StringImm> align_corners}
+#   4: construct.2:[CNode]12{[0]: ValueNode<DoSignaturePrimitive> S-Prim-MakeTuple, [1]: ValueNode<ValueTuple> (5, 5), [2]: ValueNode<None> None, [3]: ValueNode<None> None}
+#   5: construct.2:[CNode]13{[0]: ValueNode<DoSignaturePrimitive> S-Prim-make_dict, [1]: [CNode]11, [2]: [CNode]12}
+#   6: construct.2:result{[0]: ValueNode<UnpackCall> unpack_call.15, [1]: resize_bilinear, [2]: [CNode]10, [3]: [CNode]13}
+#   7: construct.2:[CNode]14{[0]: ValueNode<Primitive> Return, [1]: result}
+
+
+# [No.3] UnpackCall.3
+
+funcgraph fg_3(
+        %para3 : Func    # 4
+        , %para4 : Tuple[Tensor(F32)]    # 5
+        , %para5 : Dictionary[[size,scale_factor,align_corners,],[Tuple[Int64*2],kMetaTypeNone*2]]    # 6
+    ) {
+    %1 : Tensor(F32)[1, 2, 3, 4] = Primitive::TupleGetItem{prim_type=1}(%para4, I64(0))    #(Tuple[Tensor(F32)], I64) #scope: Default
+#16
+    %2 : Tuple[I64*2] = Primitive::dict_getitem{prim_type=1}(%para5, "size")    #(Dictionary[[size,scale_factor,align_corners,],[Tuple[Int64*2],kMetaTypeNone*2]], String) #scope: Default
+#17
+    %3 : Keyword[key : sizevalue : Tuple[Int64*2]] = Primitive::make_keyword_arg{prim_type=1}("size", %2)    #(String, Tuple[I64*2]) #scope: Default
+#18
+    %4 : NoneType = Primitive::dict_getitem{prim_type=1}(%para5, "scale_factor")    #(Dictionary[[size,scale_factor,align_corners,],[Tuple[Int64*2],kMetaTypeNone*2]], String) #scope: Default
+#19
+    %5 : Keyword[key : scale_factorvalue : kMetaTypeNone] = Primitive::make_keyword_arg{prim_type=1}("scale_factor", %4)    #(String, NoneType) #scope: Default
+#20
+    %6 : NoneType = Primitive::dict_getitem{prim_type=1}(%para5, "align_corners")    #(Dictionary[[size,scale_factor,align_corners,],[Tuple[Int64*2],kMetaTypeNone*2]], String) #scope: Default
+#21
+    %7 : Keyword[key : align_cornersvalue : kMetaTypeNone] = Primitive::make_keyword_arg{prim_type=1}("align_corners", %6)    #(String, NoneType) #scope: Default
+#22
+
+#------------------------> 2
+    %8 = %para3(%1, %3, %5, %7)    #(Tensor(F32)[1, 2, 3, 4], Keyword[key : sizevalue : Tuple[Int64*2]], Keyword[key : scale_factorvalue : kMetaTypeNone], Keyword[key : align_cornersvalue : kMetaTypeNone]) #scope: Default
+#23
+    Primitive::Return{prim_type=1}(%8)    #(Undefined) #scope: Default
+#24
+}
+# order:
+#   1: UnpackCall.3:23{[0]: 4, [1]: 16, [2]: 18, [3]: 20, [4]: 22}
+#   2: UnpackCall.3:24{[0]: ValueNode<Primitive> Return, [1]: 23}
+
+
+# [No.4] construct.7
+# In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(908)/    def construct(self, x, size=None, scale_factor=None, align_corners=False):/
+funcgraph fg_7(
+        %para6 : Tensor(F32)[1, 2, 3, 4]    # x
+        , %para7 : Keyword[key : sizevalue : Tuple[Int64*2]]    # size
+        , %para8 : Keyword[key : scale_factorvalue : kMetaTypeNone]    # scale_factor
+        , %para9 : Keyword[key : align_cornersvalue : kMetaTypeNone]    # align_corners
+    ) {
+    %1 : ExternalType = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, P)    #(ExternalType, ExternalType) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(910)/        resize_bilinear = P.ResizeBilinear(shape, align_corners)/#[CNode]25
+    %2 : Func = Primitive::getattr{prim_type=1}(%1, "ResizeBilinear")    #(ExternalType, String) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(910)/        resize_bilinear = P.ResizeBilinear(shape, align_corners)/#[CNode]26
+    %3 : Func = Primitive::resolve{prim_type=1}(NameSpace::SymbolStr, bilinear)    #(ExternalType, ExternalType) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(909)/        shape = bilinear(x.shape, size, scale_factor, align_corners, self.cls_name)/#[CNode]27
+    %4 : Tuple[I64*4] = Primitive::getattr{prim_type=1}(%para6, "shape")    #(Tensor(F32)[1, 2, 3, 4], String) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(909)/        shape = bilinear(x.shape, size, scale_factor, align_corners, self.cls_name)/#[CNode]28
+    %5 : Tuple[I64*2] = Primitive::extract_keyword_arg{prim_type=1}("size", %para7)    #(String, Keyword[key : sizevalue : Tuple[Int64*2]]) #scope: Default
+#[CNode]29
+    %6 : NoneType = Primitive::extract_keyword_arg{prim_type=1}("scale_factor", %para8)    #(String, Keyword[key : scale_factorvalue : kMetaTypeNone]) #scope: Default
+#[CNode]30
+    %7 : NoneType = Primitive::extract_keyword_arg{prim_type=1}("align_corners", %para9)    #(String, Keyword[key : align_cornersvalue : kMetaTypeNone]) #scope: Default
+#[CNode]31
+    %8 : String = Primitive::resolve{prim_type=1}(NameSpace::ClassMember, cls_name)    #(ExternalType, ExternalType) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(909)/        shape = bilinear(x.shape, size, scale_factor, align_corners, self.cls_name)/#[CNode]32
+
+#------------------------> 3
+    %9 = %3(%4, %5, %6, %7, %8)    #(Tuple[I64*4], Tuple[I64*2], NoneType, NoneType, String) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(909)/        shape = bilinear(x.shape, size, scale_factor, align_corners, self.cls_name)/#shape
+    %10 = %2(%9, %7)    #(Undefined, NoneType) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(910)/        resize_bilinear = P.ResizeBilinear(shape, align_corners)/#resize_bilinear
+    %11 = %10(%para6)    #(Tensor(F32)[1, 2, 3, 4]) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(911)/        return resize_bilinear(x)/#[CNode]33
+    Primitive::Return{prim_type=1}(%11)    #(Undefined) #scope: Default
+      # In file D:\Python39\lib\site-packages\mindspore\nn\layer\basic.py(911)/        return resize_bilinear(x)/#[CNode]34
+}
+# order:
+#   1: construct.7:[CNode]28{[0]: ValueNode<Primitive> getattr, [1]: x, [2]: ValueNode<StringImm> shape}
+#   2: construct.35:[CNode]36{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   3: construct.35:[CNode]37{[0]: [CNode]36, [1]: [CNode]28, [2]: size, [3]: scale_factor, [4]: align_corners, [5]: [CNode]32}
+#   4: construct.7:shape{[0]: [CNode]27, [1]: [CNode]28, [2]: [CNode]29, [3]: [CNode]30, [4]: [CNode]31, [5]: [CNode]32}
+#   5: construct.35:[CNode]38{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   6: construct.35:[CNode]39{[0]: [CNode]38, [1]: shape, [2]: align_corners}
+#   7: construct.7:resize_bilinear{[0]: [CNode]26, [1]: shape, [2]: [CNode]31}
+#   8: construct.35:[CNode]40{[0]: ValueNode<Primitive> resolve, [1]: ValueNode<NameSpace> CommonOPS: 'Namespace:mindspore._extends.parse.trope', [2]: ValueNode<Symbol> MakeTuple}
+#   9: construct.35:[CNode]41{[0]: [CNode]40, [1]: x}
+#  10: construct.7:[CNode]33{[0]: resize_bilinear, [1]: x}
+#  11: construct.7:[CNode]34{[0]: ValueNode<Primitive> Return, [1]: [CNode]33}
+
+
+#===============================================================================
+# num of function graphs in stack: 4/5 (Ignored 1 internal frames).
